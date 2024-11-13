@@ -1,0 +1,168 @@
+﻿<Window x:Class="WPF_LoginForm.Views.ProducersView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_LoginForm.Views"
+        xmlns:viewModel="clr-namespace:WPF_LoginForm.ViewModels"
+        mc:Ignorable="d"
+        Title="ProducersView" Height="450" Width="800"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        AllowsTransparency="True">
+
+    <Window.DataContext>
+        <viewModel:ProducersViewModel/>
+    </Window.DataContext>
+
+
+
+    <Border CornerRadius="12">
+        <Border.Background>
+            <ImageBrush ImageSource="/Images/back-image.jpg" Stretch="None"/>
+        </Border.Background>
+
+        <Border CornerRadius="10"
+                BorderThickness="2"
+                Opacity="0.95">
+
+            <Border.BorderBrush>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#462AD8" Offset="0"/>
+                    <GradientStop Color="#DA34AE" Offset="0.75"/>
+                    <GradientStop Color="#8A16C1" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.BorderBrush>
+
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                    <GradientStop Color="#060531" Offset="0"/>
+                    <GradientStop Color="#1B1448" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+
+            <Grid>
+
+                <TextBlock
+                           FontSize="30"
+                           Foreground="White"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Top" Margin="0,28,0,0" FontFamily="Candara" FontWeight="Bold" Text="Producers View"/>
+                <Button x:Name="btnUndo"                           
+BorderThickness="0"
+Content="-"
+Foreground="White"
+FontSize="16"
+FontFamily="Montserrat"
+Cursor="Hand"
+Click="btnUndo_Click" Margin="19,10,744,401">
+
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="#28AEED"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#278BEF"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Width="18" Height="18"
+            CornerRadius="9"
+            Background="{TemplateBinding Background}">
+                                <ContentPresenter VerticalAlignment="Center"
+                          HorizontalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+
+                </Button>
+
+                <DataGrid ItemsSource="{Binding Producers}" SelectedItem="{Binding SelectedProducer}" AutoGenerateColumns="False" 
+                          Margin="110,84,122,112" 
+Background="#FFC0C0E2" 
+BorderBrush="#FF8A2BE2"
+BorderThickness="2"
+RowBackground="#FFE6E6FA"
+AlternatingRowBackground="#FFD8BFD8"
+AlternationCount="2"
+RowHeaderWidth="0"
+HorizontalGridLinesBrush="#FF8A2BE2"
+VerticalGridLinesBrush="#FF8A2BE2"
+CanUserAddRows="False" FontFamily="Candara">
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID" Binding="{Binding ID}" IsReadOnly="True" Width="*" />
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}"  Width="*" />
+                        <DataGridTextColumn Header="Country Origin" Binding="{Binding CountryOrigin,UpdateSourceTrigger=PropertyChanged}" Width="*" />
+                        <DataGridTemplateColumn Header="Actions" Width="*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Content="Edit" Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}" />
+                                        <Button Content="Delete" Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}" Margin="5,0,0,0" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+
+                <Button x:Name="btnAddProducer" 
+         Command="{Binding OpenAddProducerDialogCommand}"
+         BorderThickness="0"
+         Content="Add new producer"
+         Foreground="White"
+         FontSize="12"
+         FontFamily="Montserrat"
+         Cursor="Hand"
+         Margin="10,358,573,0" FontWeight="Bold">
+
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Background" Value="#462AD8"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#28AEED"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+
+                    <Button.Template>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Width="150" Height="40"
+                     CornerRadius="20"
+                     Background="{TemplateBinding Background}">
+                                <ContentPresenter VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <TextBlock
+                    FontSize="16"
+                    Foreground="White"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top" Margin="553,358,0,0" FontFamily="Candara" FontWeight="Bold" Text="Go to search and add products" RenderTransformOrigin="0.839,3.618" Height="44" Width="329"/>
+
+                <Button x:Name="btnGoToProducts" Width="30" Height="30" Margin="644,387,122,29" RenderTransformOrigin="-0.1,0.683" Click="btnGoToProducts_Click">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Grid>
+                                <Path Data="M0,0 L0,15 L10,7.5 Z" Fill="White" Stretch="Fill"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+            </Grid>
+        </Border>
+    </Border>
+</Window>
